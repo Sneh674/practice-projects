@@ -12,12 +12,14 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "http-errors": "^2.0.0",
     "nodemon": "^3.1.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.0",
+    "@types/http-errors": "^2.0.4",
     "@types/mongoose": "^5.11.96",
     "eslint": "^9.16.0",
     "globals": "^15.13.0",
