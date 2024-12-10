@@ -39,10 +39,44 @@ const createUser=async(req,res,next)=>{
     }
 
     const token=sign({sub: newUser._id}, config.jwtSecret, {expiresIn: '7d'})
-    res.json({
+    res.status(201).json({
         id: newUser._id,
         accesstoken: token
     })
 }
 
-export {createUser}
+const loginUser=async(req,res,next)=>{
+    const {email, password}=req.body;
+
+    if(!email||!password){
+        return next(createHttpError(400, "All fields required"))
+    }
+
+    try{
+        const existUser= await userModel.findOne({email: email})
+
+        if(!existUser){
+            return next(createHttpError(404, "User not found"))
+        }else{
+            const isMatch=await bcrypt.compare(password, existUser.password)
+            if(!isMatch){
+                return next(createHttpError(400, "Wrong password"))
+            }else{
+                //create access token
+                const token=sign({sub: existUser._id}, config.jwtSecret, {expiresIn: '7d'})
+                res.status(201).json({
+                    id: existUser._id,
+                    name: existUser.name,
+                    accesstoken: token
+                })
+            }
+        }
+    }catch(err){
+        return next(createHttpError(500, "Error checking for user"))
+    }
+    // res.json({
+    //     message: "Login user",
+    // })
+}
+
+export {createUser, loginUser}
