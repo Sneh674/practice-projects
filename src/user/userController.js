@@ -12,23 +12,33 @@ const createUser=async(req,res,next)=>{
         const error =createHttpError(400,"all fields required")
         return next(error);
     }
-    const user= await userModel.findOne({email: email})
-    if(user){
-        const error = createHttpError (400,"User already exists");
-        return next(error);
+
+    try{
+        const user= await userModel.findOne({email: email})
+        if(user){
+            const error = createHttpError (400,"User already exists");
+            return next(error);
+        }
+    }catch(err){
+        return next(createHttpError(500, "Error while getting user"))
     }
 
     // 10 -> SALT ROUNDS
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    const newUser =await userModel.create({
-        name,
-        email,
-        password: hashedPassword
-    })
-    
-    const token=sign({sub: newUser._id}, config.jwtSecret, {expiresIn: '7d'})
+    let newUser;
+    try{
+        newUser =await userModel.create({
+            name,
+            email,
+            password: hashedPassword
+        })
+        
+    }catch(err){
+        return next(createHttpError(500, "Error while creating user"))
+    }
 
+    const token=sign({sub: newUser._id}, config.jwtSecret, {expiresIn: '7d'})
     res.json({
         id: newUser._id,
         accesstoken: token
