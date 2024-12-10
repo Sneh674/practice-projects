@@ -2,6 +2,7 @@
   "name": "trial",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon server.js"
   },
@@ -9,6 +10,15 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "nodemon": "^3.1.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "@types/express": "^5.0.0",
+    "eslint": "^9.16.0",
+    "globals": "^15.13.0",
+    "mongoose": "^8.8.4"
   }
 }
