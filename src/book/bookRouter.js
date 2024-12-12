@@ -1,5 +1,5 @@
 import express from "express";
-import { createBook, updateBook, listBook } from "./bookController.js";
+import { createBook, updateBook, listBook, listBookSingle } from "./bookController.js";
 import multer from "multer";
 import path from "node:path";
 import { dirname } from "node:path";
@@ -38,6 +38,7 @@ bookRouter.patch(
 );
 
 bookRouter.get("/",listBook)
+bookRouter.get("/:id",listBookSingle)
 
 // bookRouter.post("/test", upload.single("file"), (req, res) => {
 //   console.log(req.file);
