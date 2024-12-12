@@ -1,6 +1,11 @@
 import {config as conf} from 'dotenv'
 import dotenv from 'dotenv'
+// dotenv.config()
 conf();
+// import dotenv from "dotenv";
+
+// // Load environment variables from the `.env` file
+// dotenv.config();
 
 const _config={
     port: process.env.PORT,

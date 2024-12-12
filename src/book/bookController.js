@@ -1,7 +1,8 @@
 import createHttpError from "http-errors";
 // import { config } from "../config/config.js";
 import path from "node:path";
-// import cloudinary from "../config/cloudinary.js"
+// import { v2 as cloudinary } from "cloudinary";
+import cloudinary from "../config/cloudinary.js"
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,7 +11,6 @@ export { __dirname };
 
 const createBook = async (req, res, next) => {
     console.log(__dirname)
-    console.log("trial")
   try {
     console.log(req.body.title)
     console.log(req.files)
@@ -33,12 +33,14 @@ const createBook = async (req, res, next) => {
       fileName
     );
 
+    console.log("trial")
     // Upload to Cloudinary
     const uploadResult = await cloudinary.uploader.upload(filePath, {
       filename_override: fileName,
       folder: "book-covers",
       format: coverimgMimeType,
     });
+    console.log("trial2")
 
     const bookFileName = file[0].filename;
     const bookFilePath = path.resolve(
