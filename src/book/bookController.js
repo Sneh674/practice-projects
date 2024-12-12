@@ -69,7 +69,7 @@ const createBook = async (req, res, next) => {
     const newBook=await bookModel.create({
       title,
       genre,
-      author:"adsdxwswwxsx9953jjibij0944",
+      author: req.userId,
       coverimg: uploadResult.secure_url,
       file: bookFileUploadResult.secure_url,
     })
