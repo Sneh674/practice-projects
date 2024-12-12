@@ -224,5 +224,31 @@ const listBookSingle =async(req,res,next)=>{
     return next(createHttpError(500,"Can't get book"))
   }
 }
+const deleteBook=async(req,res,next)=>{
+  const bookId=req.params.id;
+  try{
+    const book=await bookModel.findOne({_id:bookId})
+    if(!book){return next(createHttpError(400, "Book not found"))}
 
-export { createBook, updateBook, listBook, listBookSingle };
+    if(book.author.toString()!=req.userId){
+      return next(createHttpError(403, "Unauthorized"))
+    }
+
+    // https://res.cloudinary.com/dyhayc8dw/image/upload/v1733981699/{book-covers/jakvarnwtitkybwfmnqu}.pdf  {public id}
+    const coverFileSplit=book.coverimg.split("/")
+    const coverimgPublicId=coverFileSplit.at(-2)+"/"+(coverFileSplit.at(-1)?.split(".").at(-2))  //=>book-covers/jakvarnwtitkybwfmnqu
+    // await cloudinary.uploader.destroy
+
+    const fileFileSplit=book.file.split("/")
+    const filePublicId=fileFileSplit.at(-2)+"/"+fileFileSplit.at(-1)
+
+    console.log(coverimgPublicId, "coverimgPublicId")
+    console.log(filePublicId, "filePublicId")
+    res.json({})
+
+  }catch(err){
+    return next(createHttpError(500,`can't get book to delete: ${err}`))
+  }
+}
+
+export { createBook, updateBook, listBook, listBookSingle, deleteBook };
