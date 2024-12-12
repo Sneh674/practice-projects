@@ -1,11 +1,12 @@
 import createHttpError from "http-errors";
 // import { config } from "../config/config.js";
 import path from "node:path";
-// import { v2 as cloudinary } from "cloudinary";
+import fs from 'fs';
 import cloudinary from "../config/cloudinary.js"
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+import bookModel from "./bookModel.js";
 
 export { __dirname };
 
@@ -19,8 +20,12 @@ const createBook = async (req, res, next) => {
       return res.status(400).json({ message: "No files uploaded" });
     }
 
+    const { title, genre } = req.body;
     const { file, coverimg } = req.files;
 
+    if(!title||!genre){
+      return res.status(400).json({ message: "Missing details "});
+    }
     if (!file || !coverimg) {
       return res.status(400).json({ message: "Missing required files" });
     }
@@ -33,14 +38,13 @@ const createBook = async (req, res, next) => {
       fileName
     );
 
-    console.log("trial")
     // Upload to Cloudinary
     const uploadResult = await cloudinary.uploader.upload(filePath, {
       filename_override: fileName,
       folder: "book-covers",
       format: coverimgMimeType,
     });
-    console.log("trial2")
+    console.log("trial")
 
     const bookFileName = file[0].filename;
     const bookFilePath = path.resolve(
@@ -62,10 +66,32 @@ const createBook = async (req, res, next) => {
     console.log("Book File Upload Result:", bookFileUploadResult);
     console.log("Cover Image Upload Result:", uploadResult);
 
+    const newBook=await bookModel.create({
+      title,
+      genre,
+      author:"adsdxwswwxsx9953jjibij0944",
+      coverimg: uploadResult.secure_url,
+      file: bookFileUploadResult.secure_url,
+    })
+
+    try {
+      await fs.promises.unlink(filePath);
+    } catch (error) {
+      console.error(`Error deleting file at ${filePath}:`, error);
+    }
+
+    try {
+      await fs.promises.unlink(bookFilePath);
+    } catch (error) {
+      console.error(`Error deleting file at ${bookFilePath}:`, error);
+    }
+  
+
     res
       .status(200)
       .json({
         message: "Files uploaded successfully",
+        id: newBook._id,
         uploadResult,
         bookFileUploadResult,
       });
