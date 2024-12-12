@@ -244,7 +244,21 @@ const deleteBook=async(req,res,next)=>{
 
     console.log(coverimgPublicId, "coverimgPublicId")
     console.log(filePublicId, "filePublicId")
-    res.json({})
+
+    try{
+      await cloudinary.uploader.destroy(coverimgPublicId)
+    }catch(err){return next(createHttpError(500,"can't delete cover image from cloudinary"))}
+    try{
+      await cloudinary.uploader.destroy(filePublicId,{
+        resource_type: "raw"
+      })
+    }catch(err){return next(createHttpError(500,"can't delete book file from cloudinary"))}
+
+    try{
+      const deletedBook= await bookModel.deleteOne({_id:bookId})
+    }catch(err){return next(createHttpError(500,"Can't delete from database"))}
+    // res.json({"id of deleted book" : deletedBook._id})
+    return res.sendStatus(204);
 
   }catch(err){
     return next(createHttpError(500,`can't get book to delete: ${err}`))
