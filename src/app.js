@@ -2,9 +2,13 @@ import express from 'express'
 import globalErrorHandler from './middlewares/globalErrorHandler.js'
 import userRouter from './user/userRouter.js'
 import bookRouter from './book/bookRouter.js'
+import cors from 'cors';
 
 const app=express()
 
+app.use(cors({
+    origin: "http://localhost:3000"
+}))
 app.use(express.json());
 
 app.get("/",(req,res)=>{
