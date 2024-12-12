@@ -4,6 +4,7 @@ import multer from "multer";
 import path from "node:path";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import authenticate from "../middlewares/authenticate.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -18,9 +19,10 @@ const upload = multer({
 
 bookRouter.post(
   "/",
+  authenticate,
   upload.fields([
-    { name: "file" },
-    { name: "coverimg" } // Include all required fields
+    { name: "file", maxCount: 1 },//maxCount: 1
+    { name: "coverimg", maxCount: 1 } // Include all required fields
   ]),
   createBook
 );
