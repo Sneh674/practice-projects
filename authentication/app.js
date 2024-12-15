@@ -4,13 +4,14 @@ const createError=require("http-errors")
 require("dotenv").config()
 require("./helpers/init_mongodb.js")
 const authRoute=require("./routes/auth.route")
+const {verifyAccessToken}=require("./helpers/jwt_helper.js")
 
 const app= express();
 
 app.use(morgan("dev"))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.get("/",async(req,res,next)=>{
+app.get("/",verifyAccessToken,async(req,res,next)=>{
     res.send("hello")
 })
 app.use("/auth",authRoute)

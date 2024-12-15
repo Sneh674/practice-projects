@@ -1,4 +1,5 @@
 GET http://localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieW91cnMgdHJ1bHkiLCJpYXQiOjE3MzQwODkzNjcsImV4cCI6MTczNDA5Mjk2NywiYXVkIjoiNjc1YzAxMjM3ODE4NDIwNzA1NTU4NmZkIiwiaXNzIjoicGlja3VycGFnZS5jb20ifQ.fwTXGDZxfwyE6Sqp8NjUsQITeZmWU2H33Oem4vAaPHM
 
 ###
 GET http://localhost:3000/trial
