@@ -23,4 +23,12 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:3000/auth/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieW91cnMgdHJ1bHkiLCJpYXQiOjE3MzQyNTIzODIsImV4cCI6MTc2NTgwOTk4MiwiYXVkIjoiNjc1YzAxMjM3ODE4NDIwNzA1NTU4NmZkIiwiaXNzIjoicGlja3VycGFnZS5jb20ifQ.gGX-e2eYK5-ZLwHardJ0Z-tQ7i8kF-sAibjDnRZU1G0"
+}
+
+###
 DELETE http://localhost:3000/auth/logout

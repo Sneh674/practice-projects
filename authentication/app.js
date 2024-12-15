@@ -5,6 +5,14 @@ require("dotenv").config()
 require("./helpers/init_mongodb.js")
 const authRoute=require("./routes/auth.route")
 const {verifyAccessToken}=require("./helpers/jwt_helper.js")
+const client=require("./helpers/init_redis.js")
+
+// client.SET('foo','bar')
+
+// client.GET('foo',(err,value)=>{
+//     if(err){console.log(err.message)}
+//     console.log(value)
+// })
 
 const app= express();
 
