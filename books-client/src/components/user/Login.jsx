@@ -20,7 +20,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:4000/api/users/login', formData);
+      console.log("response: ",response)
       console.log('Login successful:', response.data);
+      const token = response.data.accesstoken;
+      localStorage.setItem('authToken', token);
       navigate('/allbooks')
     } catch (error) {
       console.error('Error during Login:', error.response?.data || error.message);

@@ -8,6 +8,7 @@ import { config } from "../config/config.js";
 
 const createUser=async(req,res,next)=>{ 
     const {name,email,password}=req.body;
+    console.log(req.body);
     if(!name||!email|!password){
         const error =createHttpError(400,"all fields required")
         return next(error);

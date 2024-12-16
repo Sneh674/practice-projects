@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
 import Allbooks from './components/book/Allbooks';
+import Createbook from './components/book/Createbook';
 
 function AppContent() {
   const [count, setCount] = useState(0);
@@ -56,6 +57,10 @@ function App() {
     {
       path: "/allbooks",
       element: <Allbooks />
+    },
+    {
+      path: "/createbook",
+      element: <Createbook />
     }
   ]);
 

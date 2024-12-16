@@ -1,20 +1,21 @@
 import createHttpError from "http-errors";
 // import { config } from "../config/config.js";
 import path from "node:path";
-import fs from 'fs';
-import cloudinary from "../config/cloudinary.js"
+import fs from "fs";
+import cloudinary from "../config/cloudinary.js";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import bookModel from "./bookModel.js";
+import userModel from "../user/userModel.js";
 
 export { __dirname };
 
 const createBook = async (req, res, next) => {
-    console.log(__dirname)
+  console.log(__dirname);
   try {
-    console.log(req.body.title)
-    console.log(req.files)
+    console.log(req.body.title);
+    console.log(req.files);
 
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).json({ message: "No files uploaded" });
@@ -23,8 +24,8 @@ const createBook = async (req, res, next) => {
     const { title, genre } = req.body;
     const { file, coverimg } = req.files;
 
-    if(!title||!genre){
-      return res.status(400).json({ message: "Missing details "});
+    if (!title || !genre) {
+      return res.status(400).json({ message: "Missing details " });
     }
     if (!file || !coverimg) {
       return res.status(400).json({ message: "Missing required files" });
@@ -44,7 +45,7 @@ const createBook = async (req, res, next) => {
       folder: "book-covers",
       format: coverimgMimeType,
     });
-    console.log("trial")
+    console.log("trial");
 
     const bookFileName = file[0].filename;
     const bookFilePath = path.resolve(
@@ -66,13 +67,13 @@ const createBook = async (req, res, next) => {
     console.log("Book File Upload Result:", bookFileUploadResult);
     console.log("Cover Image Upload Result:", uploadResult);
 
-    const newBook=await bookModel.create({
+    const newBook = await bookModel.create({
       title,
       genre,
       author: req.userId,
       coverimg: uploadResult.secure_url,
       file: bookFileUploadResult.secure_url,
-    })
+    });
 
     try {
       await fs.promises.unlink(filePath);
@@ -85,41 +86,37 @@ const createBook = async (req, res, next) => {
     } catch (error) {
       console.error(`Error deleting file at ${bookFilePath}:`, error);
     }
-  
 
-    res
-      .status(200)
-      .json({
-        message: "Files uploaded successfully",
-        id: newBook._id,
-        uploadResult,
-        bookFileUploadResult,
-      });
+    res.status(200).json({
+      message: "Files uploaded successfully",
+      id: newBook._id,
+      uploadResult,
+      bookFileUploadResult,
+    });
   } catch (error) {
     console.error("Error uploading files:", error);
     next(createHttpError(500, "An error occurred while uploading files."));
   }
 };
 
-const updateBook= async (req,res,next)=>{
-  try{
-    console.log(req.body)
-    console.log(req.files)
+const updateBook = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    console.log(req.files);
 
-    const bookId= req.params.bookId;
+    const bookId = req.params.bookId;
     const { title, genre } = req.body;
     const { file, coverimg } = req.files;
 
-    const book= await bookModel.findOne({_id: bookId});
+    const book = await bookModel.findOne({ _id: bookId });
 
-    if(!book){
-      return next(createHttpError(404, "Book not found"))
+    if (!book) {
+      return next(createHttpError(404, "Book not found"));
     }
 
-    if(book.author.toString()!=req.userId){
-      return next(createHttpError(403, "Unauthorized"))
+    if (book.author.toString() != req.userId) {
+      return next(createHttpError(403, "Unauthorized"));
     }
-
 
     let completeCoverimg = "";
     if (req?.files?.coverimg) {
@@ -131,7 +128,7 @@ const updateBook= async (req,res,next)=>{
         fileName
       );
 
-      completeCoverimg=fileName
+      completeCoverimg = fileName;
 
       // Upload to Cloudinary
       const uploadResult = await cloudinary.uploader.upload(filePath, {
@@ -140,7 +137,7 @@ const updateBook= async (req,res,next)=>{
         format: coverimgMimeType,
       });
 
-      completeCoverimg=uploadResult.secure_url;
+      completeCoverimg = uploadResult.secure_url;
       try {
         await fs.promises.unlink(filePath);
       } catch (error) {
@@ -149,7 +146,7 @@ const updateBook= async (req,res,next)=>{
       console.log("trial");
     }
 
-    let completeFilename="";
+    let completeFilename = "";
     if (req?.files?.file) {
       const bookFileName = file[0].filename;
       const bookFilePath = path.resolve(
@@ -167,7 +164,7 @@ const updateBook= async (req,res,next)=>{
           format: "pdf",
         }
       );
-      completeFilename=bookFileUploadResult.secure_url;
+      completeFilename = bookFileUploadResult.secure_url;
       try {
         await fs.promises.unlink(bookFilePath);
       } catch (error) {
@@ -188,81 +185,110 @@ const updateBook= async (req,res,next)=>{
       },
       { new: true }
     );
-  
 
-    res
-      .status(200)
-      .json({
-        message: "Files updated successfully",
-        updatedBook
-      });
-  }catch(err){
+    res.status(200).json({
+      message: "Files updated successfully",
+      updatedBook,
+    });
+  } catch (err) {
     console.error("Error updating files:", err);
     next(createHttpError(500, "An error occurred while updating files."));
   }
-}
+};
 
-const listBook= async (req,res,next)=>{
-  try{
+const listBook = async (req, res, next) => {
+  try {
     //add pagination
-    const book =await bookModel.find();
-    res.json(book)
-  }catch(err){
-    return next(createHttpError(500, "Can't fetch books"))
+    // const book =await bookModel.find();
+    // book.forEach(element => {
+    //   const authorname=await userModel.findOne({id:element.author})
+    //   console.log("trial")
+    //   console.log(authorname.name)
+    //   book.author=authorname.name
+    //   console.log(book)
+    // });
+    // console.log(book)
+    // const authorname=await userModel.findOne({id:book.author})
+    // console.log("trial")
+    // console.log(authorname.name)
+    // book.author=authorname.name
+    // console.log(book)
+    console.log("trial");
+    let books = await bookModel.find().populate("author", "name").lean();;
+    books.forEach((element) => {
+      element.author = element.author.name;
+    });
+    console.log("trial");
+    console.log(books);
+    res.json(books);
+  } catch (err) {
+    return next(createHttpError(500, "Can't fetch books"));
   }
-}
+};
 
-const listBookSingle =async(req,res,next)=>{
-  const bookId=req.params.id;
-  try{
-    const book= await bookModel.findOne({_id: bookId})
-    if(!book){
-      return next(createHttpError(404,"Book not found"))
+const listBookSingle = async (req, res, next) => {
+  const bookId = req.params.id;
+  try {
+    const book = await bookModel.findOne({ _id: bookId });
+    if (!book) {
+      return next(createHttpError(404, "Book not found"));
     }
-    return res.json({book})
-  }catch(err){
-    return next(createHttpError(500,"Can't get book"))
+    return res.json({ book });
+  } catch (err) {
+    return next(createHttpError(500, "Can't get book"));
   }
-}
-const deleteBook=async(req,res,next)=>{
-  const bookId=req.params.id;
-  try{
-    const book=await bookModel.findOne({_id:bookId})
-    if(!book){return next(createHttpError(400, "Book not found"))}
+};
+const deleteBook = async (req, res, next) => {
+  const bookId = req.params.id;
+  try {
+    const book = await bookModel.findOne({ _id: bookId });
+    if (!book) {
+      return next(createHttpError(400, "Book not found"));
+    }
 
-    if(book.author.toString()!=req.userId){
-      return next(createHttpError(403, "Unauthorized"))
+    if (book.author.toString() != req.userId) {
+      return next(createHttpError(403, "Unauthorized"));
     }
 
     // https://res.cloudinary.com/dyhayc8dw/image/upload/v1733981699/{book-covers/jakvarnwtitkybwfmnqu}.pdf  {public id}
-    const coverFileSplit=book.coverimg.split("/")
-    const coverimgPublicId=coverFileSplit.at(-2)+"/"+(coverFileSplit.at(-1)?.split(".").at(-2))  //=>book-covers/jakvarnwtitkybwfmnqu
+    const coverFileSplit = book.coverimg.split("/");
+    const coverimgPublicId =
+      coverFileSplit.at(-2) + "/" + coverFileSplit.at(-1)?.split(".").at(-2); //=>book-covers/jakvarnwtitkybwfmnqu
     // await cloudinary.uploader.destroy
 
-    const fileFileSplit=book.file.split("/")
-    const filePublicId=fileFileSplit.at(-2)+"/"+fileFileSplit.at(-1)
+    const fileFileSplit = book.file.split("/");
+    const filePublicId = fileFileSplit.at(-2) + "/" + fileFileSplit.at(-1);
 
-    console.log(coverimgPublicId, "coverimgPublicId")
-    console.log(filePublicId, "filePublicId")
+    console.log(coverimgPublicId, "coverimgPublicId");
+    console.log(filePublicId, "filePublicId");
 
-    try{
-      await cloudinary.uploader.destroy(coverimgPublicId)
-    }catch(err){return next(createHttpError(500,"can't delete cover image from cloudinary"))}
-    try{
-      await cloudinary.uploader.destroy(filePublicId,{
-        resource_type: "raw"
-      })
-    }catch(err){return next(createHttpError(500,"can't delete book file from cloudinary"))}
+    try {
+      await cloudinary.uploader.destroy(coverimgPublicId);
+    } catch (err) {
+      return next(
+        createHttpError(500, "can't delete cover image from cloudinary")
+      );
+    }
+    try {
+      await cloudinary.uploader.destroy(filePublicId, {
+        resource_type: "raw",
+      });
+    } catch (err) {
+      return next(
+        createHttpError(500, "can't delete book file from cloudinary")
+      );
+    }
 
-    try{
-      const deletedBook= await bookModel.deleteOne({_id:bookId})
-    }catch(err){return next(createHttpError(500,"Can't delete from database"))}
+    try {
+      const deletedBook = await bookModel.deleteOne({ _id: bookId });
+    } catch (err) {
+      return next(createHttpError(500, "Can't delete from database"));
+    }
     // res.json({"id of deleted book" : deletedBook._id})
     return res.sendStatus(204);
-
-  }catch(err){
-    return next(createHttpError(500,`can't get book to delete: ${err}`))
+  } catch (err) {
+    return next(createHttpError(500, `can't get book to delete: ${err}`));
   }
-}
+};
 
 export { createBook, updateBook, listBook, listBookSingle, deleteBook };
