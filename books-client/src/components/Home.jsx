@@ -1,11 +1,12 @@
 import React from 'react'
-import {createBrowserRouter} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 const Home = () => {
   return (
     <div>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
+      <Link to="/login">Login</Link>
+      <br />
+      <Link to="/register">Register</Link>
     </div>
   )
 }

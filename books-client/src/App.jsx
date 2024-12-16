@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider, Link } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
+import Allbooks from './components/book/Allbooks';
 
 function AppContent() {
   const [count, setCount] = useState(0);
@@ -52,6 +53,10 @@ function App() {
       path: '/register',
       element: <Register />,
     },
+    {
+      path: "/allbooks",
+      element: <Allbooks />
+    }
   ]);
 
   return <RouterProvider router={router} />;
