@@ -7,6 +7,7 @@ import Login from './components/user/Login';
 import Register from './components/user/Register';
 import Allbooks from './components/book/Allbooks';
 import Createbook from './components/book/Createbook';
+import Editbook from './components/book/Editbook';
 
 function AppContent() {
   const [count, setCount] = useState(0);
@@ -61,6 +62,10 @@ function App() {
     {
       path: "/createbook",
       element: <Createbook />
+    },
+    {
+      path: "/editbook/:id",
+      element: <Editbook />
     }
   ]);
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 const Createbook = () => {
@@ -51,6 +51,7 @@ const Createbook = () => {
   };
   return (
     <div>
+      <Link to="/allbooks">Back to All Books</Link>
       <div>Add book</div>
       <form onSubmit={handleSubmit}>
         <input type="text" name="title" onChange={handleChange} />

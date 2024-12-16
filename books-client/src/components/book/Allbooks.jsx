@@ -36,6 +36,7 @@ const Allbooks = () => {
                 alt={`${book.title} cover`}
                 style={{ width: "100px", height: "100px" }}
               />
+              <Link to={`/editbook/${book._id}`}>Edit</Link>
               {/* <Link to={`/book/${book._id}`}>View Details</Link> */}
             </div>
           ))
