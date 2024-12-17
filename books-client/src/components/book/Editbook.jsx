@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -8,6 +8,7 @@ const Editbook = () => {
     const { id } = useParams();
     console.log(id);
 
+    const [loading, setLoading] = useState(false)
     // const [books, setBooks] = useState({})
     const [bookData, setBookData] = useState({
         title: "",
@@ -49,36 +50,41 @@ const Editbook = () => {
         }
     };
 
-    const handleSubmit =async(e) => {
+    const handleSubmit = async (e) => {
+        setLoading(true)
         e.preventDefault();
         const formData = new FormData();
         Object.keys(bookData).forEach((key) => {
-          formData.append(key, bookData[key]);
+            formData.append(key, bookData[key]);
         });
         try {
-          const response = await axios.patch(`http://localhost:4000/api/books/${id}`, formData, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-            },
-          });
-          console.log('Updation successful:', response.data);
-          alert("Book updated")
-          navigate('/allbooks')
+            const response = await axios.patch(`http://localhost:4000/api/books/${id}`, formData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+                },
+            });
+            console.log('Updation successful:', response.data);
+            alert("Book updated")
+            navigate('/allbooks')
         } catch (error) {
-          console.error('Error during updating:', error.response?.data || error.message);
-          alert('Updation failed!');
+            console.error('Error during updating:', error.response?.data || error.message);
+            alert('Updation failed!');
         }
-      };
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div>
             <Link to="/allbooks">Back to All Books</Link>
             <div>Edit Book</div>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="title" value={bookData.title} onChange={handleChange}/>
-                <input type="text" name="genre" value={bookData.genre} onChange={handleChange}/>
-                <input type="file" name="coverimg" id="" onChange={handleChange}/>
-                <input type="file" name="file" id="" onChange={handleChange}/>
+                <input type="text" name="title" value={bookData.title} onChange={handleChange} />
+                <input type="text" name="genre" value={bookData.genre} onChange={handleChange} />
+                <input type="file" name="coverimg" id="" onChange={handleChange} />
+                <input type="file" name="file" id="" onChange={handleChange} />
                 <input type="submit" value="Submit" />
             </form>
             {/* <div>{bookData}</div> */}

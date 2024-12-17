@@ -8,8 +8,8 @@ const Allbooks = () => {
   const fecthAPI = async () => {
     try {
       const response = await axios.get("http://localhost:4000/api/books");
-      console.log(response);
-      console.log(response.data);
+      // console.log(response);
+      // console.log(response.data);
       setBooks(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -36,7 +36,10 @@ const Allbooks = () => {
                 alt={`${book.title} cover`}
                 style={{ width: "100px", height: "100px" }}
               />
+              <br />
               <Link to={`/editbook/${book._id}`}>Edit</Link>
+              <br />
+              <Link to={`/deletebook/${book._id}`}>Delete</Link>
               {/* <Link to={`/book/${book._id}`}>View Details</Link> */}
             </div>
           ))

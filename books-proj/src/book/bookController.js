@@ -213,13 +213,13 @@ const listBook = async (req, res, next) => {
     // console.log(authorname.name)
     // book.author=authorname.name
     // console.log(book)
-    console.log("trial");
+    // console.log("trial");
     let books = await bookModel.find().populate("author", "name").lean();;
     books.forEach((element) => {
       element.author = element.author.name;
     });
-    console.log("trial");
-    console.log(books);
+    // console.log("trial");
+    // console.log(books);
     res.json(books);
   } catch (err) {
     return next(createHttpError(500, "Can't fetch books"));
@@ -238,7 +238,9 @@ const listBookSingle = async (req, res, next) => {
     return next(createHttpError(500, "Can't get book"));
   }
 };
+
 const deleteBook = async (req, res, next) => {
+  console.log("deleting")
   const bookId = req.params.id;
   try {
     const book = await bookModel.findOne({ _id: bookId });
@@ -259,8 +261,8 @@ const deleteBook = async (req, res, next) => {
     const fileFileSplit = book.file.split("/");
     const filePublicId = fileFileSplit.at(-2) + "/" + fileFileSplit.at(-1);
 
-    console.log(coverimgPublicId, "coverimgPublicId");
-    console.log(filePublicId, "filePublicId");
+    // console.log(coverimgPublicId, "coverimgPublicId");
+    // console.log(filePublicId, "filePublicId");
 
     try {
       await cloudinary.uploader.destroy(coverimgPublicId);
@@ -281,11 +283,15 @@ const deleteBook = async (req, res, next) => {
 
     try {
       const deletedBook = await bookModel.deleteOne({ _id: bookId });
+      console.log("deleted")
+      res.status(204).json({
+        message: "Files deleted successfully",
+        deletedBook,
+      });
     } catch (err) {
       return next(createHttpError(500, "Can't delete from database"));
     }
     // res.json({"id of deleted book" : deletedBook._id})
-    return res.sendStatus(204);
   } catch (err) {
     return next(createHttpError(500, `can't get book to delete: ${err}`));
   }
