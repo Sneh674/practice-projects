@@ -18,7 +18,7 @@ const Editbook = () => {
         file: "",
     });
 
-    const fecthAPI = async () => {
+    const fetchAPI = async () => {
         try {
             const response = await axios.get(`http://localhost:4000/api/books/${id}`);
             console.log(response.data.book);
@@ -30,7 +30,7 @@ const Editbook = () => {
     };
 
     useEffect(() => {
-        fecthAPI();
+        fetchAPI();
     }, [id]);
 
     const handleChange = (e) => {
