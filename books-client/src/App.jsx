@@ -43,7 +43,7 @@ function AppContent() {
   }, []);
 
   return (
-    <div>
+    <div className="bg-black text-white">
       <h1>hello</h1>
       <div>{count}</div>
       <Link to="/next">Next</Link>

@@ -32,26 +32,31 @@ const Allbooksuser = () => {
     }, []);
 
     return (
-        <div>
-            <Link to="/createbook">Add Book</Link>
-            <div className="userbooks">
-                <div>All user books</div>
-                <div style={{ display: 'flex' }}>
+        <div className="m-0 p-7 bg-slate-700 min-h-screen">
+            <Link
+                to="/createbook"
+                className="text-cyan-500 text-lg bg-slate-800 p-2 m-2 rounded-md"
+            >
+                Add Book
+            </Link>
+            <div className="userbooks mt-5">
+                <div className="text-cyan-300 text-2xl mb-2">Your books</div>
+                <div className="flex text-cyan-200 text-lg">
                     {userrBooks.length > 0 ? (
                         userrBooks.map((book) => (
-                            <div key={book._id} style={{ width: '500px' }}>
-                                <h3>{book.title}</h3>
-                                <p>Genre: {book.genre}</p>
-                                <p>Author: {book.author}</p>
+                            <div key={book._id} style={{ width: "300px" }}>
+                                <h3>Title : {book.title}</h3>
+                                <p>Genre : {book.genre}</p>
+                                <p>Author : {book.author}</p>
                                 <img
                                     src={book.coverimg}
                                     alt={`${book.title} cover`}
-                                    style={{ width: "100px", height: "100px" }}
+                                    className="w-32 h-48 object-cover rounded-lg mt-2 mb-2"
                                 />
-                                <br />
-                                <Link to={`/editbook/${book._id}`}>Edit</Link>
-                                <br />
-                                <Link to={`/deletebook/${book._id}`}>Delete</Link>
+                                <div className="links flex flex-col space-y-2">
+                                    <Link to={`/editbook/${book._id}`} className="underline">Edit</Link>
+                                    <Link to={`/deletebook/${book._id}`} className="underline">Delete</Link>
+                                </div>
                                 {/* <Link to={`/book/${book._id}`}>View Details</Link> */}
                             </div>
                         ))
@@ -60,19 +65,19 @@ const Allbooksuser = () => {
                     )}
                 </div>
             </div>
-            <div className="otherbooks">
-                <div>Other books</div>
-                <div style={{ display: 'flex' }}>
+            <div className="otherbooks mt-7 ">
+                <div className="text-cyan-300 text-2xl mb-2">Other books</div>
+                <div className="flex text-cyan-200 text-lg">
                     {otherrBooks.length > 0 ? (
                         otherrBooks.map((book) => (
-                            <div key={book._id} style={{ width: '500px' }}>
-                                <h3>{book.title}</h3>
-                                <p>Genre: {book.genre}</p>
-                                <p>Author: {book.author}</p>
+                            <div key={book._id} style={{ width: "300px" }}>
+                                <h3>Title : {book.title}</h3>
+                                <p>Genre : {book.genre}</p>
+                                <p>Author : {book.author}</p>
                                 <img
                                     src={book.coverimg}
                                     alt={`${book.title} cover`}
-                                    style={{ width: "100px", height: "100px" }}
+                                    className="w-32 h-48 object-cover rounded-lg mt-2 mb-2"
                                 />
                                 {/* <Link to={`/book/${book._id}`}>View Details</Link> */}
                             </div>

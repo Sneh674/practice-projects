@@ -62,7 +62,7 @@ const Deletebook = () => {
 
   return (
     <div>
-      <Link to="/allbooks">Back to All Books</Link>
+      <Link to="/allbooksuser">Back to All Books</Link>
       <div>Delete Book</div>
       <div>
         <li>Title: {bookData.title}</li>
