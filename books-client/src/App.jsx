@@ -15,7 +15,7 @@ function AppContent() {
 
   const fecthAPI = async () => {
     try {
-      const response = await axios.get("http://localhost:4000");
+      const response = await axios.get(`https://book-backend-kehz.onrender.com`);
       console.log(response);
       console.log(response.data);
       console.log(response.data.message);

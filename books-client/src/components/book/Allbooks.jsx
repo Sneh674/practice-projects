@@ -7,7 +7,7 @@ const Allbooks = () => {
 
   const fecthAPI = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/books");
+      const response = await axios.get("https://book-backend-kehz.onrender.com/api/books");
       // console.log(response);
       // console.log(response.data);
       setBooks(response.data);

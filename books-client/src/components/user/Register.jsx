@@ -21,7 +21,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/users/register",
+        "https://book-backend-kehz.onrender.com/api/users/register",
         formData
       );
       console.log("Registration successful:", response.data);

@@ -21,7 +21,7 @@ const Deletebook = () => {
   const fetchAPI = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:4000/api/books/${id}`);
+      const response = await axios.get(`https://book-backend-kehz.onrender.com/api/books/${id}`);
       console.log(response.data.book);
       // console.log(response.data);
       setBookData(response.data.book);
@@ -40,7 +40,7 @@ const Deletebook = () => {
     setLoading(true)
     try {
       console.log("trial")
-      const response = await axios.delete(`http://localhost:4000/api/books/${id}`, {
+      const response = await axios.delete(`https://book-backend-kehz.onrender.com/api/books/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('authToken')}`,
         },
