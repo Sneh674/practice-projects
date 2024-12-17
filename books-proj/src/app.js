@@ -9,21 +9,30 @@ const app = express();
 // app.use(cors({
 //     origin: "http://localhost:5173"
 // }))
+
 app.use(
   cors({
-    origin: (origin, callback) => {
-      const allowedOrigins = [
-        "https://localhost:5173",
-        "https://book-frontend-nlvi.onrender.com",
-      ];
-      if (allowedOrigins.includes(origin) || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: "http://localhost:5173", // Your frontend URL
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow Authorization header
   })
 );
+
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       const allowedOrigins = [
+//         "https://localhost:5173",
+//         "https://book-frontend-nlvi.onrender.com",
+//       ];
+//       if (allowedOrigins.includes(origin) || !origin) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//   })
+// );
 
 app.use(express.json());
 

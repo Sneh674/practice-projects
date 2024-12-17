@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
-import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
@@ -9,13 +14,17 @@ import Allbooks from "./components/book/Allbooks";
 import Createbook from "./components/book/Createbook";
 import Editbook from "./components/book/Editbook";
 import Deletebook from "./components/book/Deletebook";
+import Allbooksuser from "./components/book/Allbooksuser";
 
 function AppContent() {
   const [count, setCount] = useState(0);
+  const navigate = useNavigate();
 
   const fecthAPI = async () => {
     try {
-      const response = await axios.get(`https://book-backend-kehz.onrender.com`);
+      const response = await axios.get(
+        `http://localhost:4000/`
+      );
       console.log(response);
       console.log(response.data);
       console.log(response.data.message);
@@ -26,6 +35,10 @@ function AppContent() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      navigate("/allbooksuser");
+    }
     fecthAPI();
   }, []);
 
@@ -69,8 +82,12 @@ function App() {
       element: <Editbook />,
     },
     {
-      path:"/deletebook/:id",
-      element: <Deletebook />
+      path: "/deletebook/:id",
+      element: <Deletebook />,
+    },
+    {
+      path: "/allbooksuser",
+      element: <Allbooksuser />
     }
   ]);
 

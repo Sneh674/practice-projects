@@ -232,6 +232,45 @@ const listBook = async (req, res, next) => {
   }
 };
 
+const listBookUser=async(req,res,next)=>{
+  const authorId = req.userId;
+  try {
+    let userBooks;
+    let otherBooks;
+    try {
+      userBooks=await bookModel.find({ author: authorId }).populate("author", "name").lean();
+    } catch (error) {
+      return next(createHttpError(500, "can't get user books"))
+    }
+    try {
+      otherBooks=await bookModel.find({ author: {$ne: authorId} }).populate("author", "name").lean();
+    } catch (error) {
+      return next(createHttpError(500, "can't get other books"))
+    }
+    userBooks.forEach((element) => {
+      // element.author = element.author.name;
+      try {
+        element.author = element.author.name;
+      } catch (error) {
+        element.author=element.author;
+      }
+    });
+    otherBooks.forEach((element) => {
+      // element.author = element.author.name;
+      try {
+        element.author = element.author.name;
+      } catch (error) {
+        element.author=element.author;
+      }
+    });
+    console.log("user books: ", userBooks)
+    console.log("other books: ", otherBooks)
+    res.json({userBooks, otherBooks})
+  } catch (error) {
+    return next(createHttpError(500, "Can't fetch books"))
+  }
+}
+
 const listBookSingle = async (req, res, next) => {
   const bookId = req.params.id;
   try {
@@ -303,4 +342,4 @@ const deleteBook = async (req, res, next) => {
   }
 };
 
-export { createBook, updateBook, listBook, listBookSingle, deleteBook };
+export { createBook, updateBook, listBook, listBookSingle, deleteBook, listBookUser };

@@ -1,5 +1,5 @@
 import express from "express";
-import { createBook, updateBook, listBook, listBookSingle, deleteBook } from "./bookController.js";
+import { createBook, updateBook, listBook, listBookSingle, deleteBook, listBookUser } from "./bookController.js";
 import multer from "multer";
 import path from "node:path";
 import { dirname } from "node:path";
@@ -37,7 +37,8 @@ bookRouter.patch(
   updateBook
 );
 
-bookRouter.get("/",listBook)
+// bookRouter.get("/",listBook)
+bookRouter.get("/",authenticate,listBookUser)
 bookRouter.get("/:id",listBookSingle)
 bookRouter.delete("/:id",authenticate,deleteBook)
 

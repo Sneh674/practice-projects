@@ -21,14 +21,14 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://book-backend-kehz.onrender.com/api/users/register",
+        "http://localhost:4000/api/users/register",
         formData
       );
       console.log("Registration successful:", response.data);
       console.log("Login successful:", response.data);
       const token = response.data.accesstoken;
       localStorage.setItem("authToken", token);
-      navigate("/allbooks");
+      navigate("/allbooksuser");
     } catch (error) {
       console.error(
         "Error during registration:",

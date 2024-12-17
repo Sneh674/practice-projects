@@ -20,7 +20,7 @@ const Editbook = () => {
 
     const fetchAPI = async () => {
         try {
-            const response = await axios.get(`https://book-backend-kehz.onrender.com/api/books/${id}`);
+            const response = await axios.get(`http://localhost:4000/api/books/${id}`);
             console.log(response.data.book);
             // console.log(response.data);
             setBookData(response.data.book);
@@ -58,7 +58,7 @@ const Editbook = () => {
             formData.append(key, bookData[key]);
         });
         try {
-            const response = await axios.patch(`https://book-backend-kehz.onrender.com/api/books/${id}`, formData, {
+            const response = await axios.patch(`http://localhost:4000/api/books/${id}`, formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('authToken')}`,
                 },
