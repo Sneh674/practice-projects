@@ -48,7 +48,7 @@ const Deletebook = () => {
       console.log("trial")
       console.log('Deletion successful:', response.data);
       alert("Book deleted")
-      navigate('/allbooks')
+      navigate('/allbooksuser')
     } catch (error) {
       console.error('Error during deleting:', error.response?.data || error.message);
       alert('Deletion failed!');

@@ -65,7 +65,7 @@ const Editbook = () => {
             });
             console.log('Updation successful:', response.data);
             alert("Book updated")
-            navigate('/allbooks')
+            navigate('/allbooksuser')
         } catch (error) {
             console.error('Error during updating:', error.response?.data || error.message);
             alert('Updation failed!');

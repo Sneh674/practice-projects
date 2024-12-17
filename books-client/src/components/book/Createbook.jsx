@@ -45,7 +45,7 @@ const Createbook = () => {
       });
       console.log('Registration successful:', response.data);
       alert("Book added")
-      navigate('/allbooks')
+      navigate('/allbooksuser')
     } catch (error) {
       console.error('Error during registration:', error.response?.data || error.message);
       alert('Registration failed!');
