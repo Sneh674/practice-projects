@@ -209,17 +209,23 @@ const listBook = async (req, res, next) => {
     // });
     // console.log(book)
     // const authorname=await userModel.findOne({id:book.author})
-    // console.log("trial")
+    console.log("trial");
     // console.log(authorname.name)
     // book.author=authorname.name
     // console.log(book)
-    // console.log("trial");
-    let books = await bookModel.find().populate("author", "name").lean();;
+    let books = await bookModel.find().populate("author", "name").lean();
+    // let books=await bookModel.find()
+    // console.log(books)
+    console.log("before");
     books.forEach((element) => {
-      element.author = element.author.name;
+      // element.author = element.author.name;
+      try {
+        element.author = element.author.name;
+      } catch (error) {
+        element.author=element.author;
+      }
     });
-    // console.log("trial");
-    // console.log(books);
+    console.log(books);
     res.json(books);
   } catch (err) {
     return next(createHttpError(500, "Can't fetch books"));
@@ -240,7 +246,7 @@ const listBookSingle = async (req, res, next) => {
 };
 
 const deleteBook = async (req, res, next) => {
-  console.log("deleting")
+  console.log("deleting");
   const bookId = req.params.id;
   try {
     const book = await bookModel.findOne({ _id: bookId });
@@ -283,7 +289,7 @@ const deleteBook = async (req, res, next) => {
 
     try {
       const deletedBook = await bookModel.deleteOne({ _id: bookId });
-      console.log("deleted")
+      console.log("deleted");
       res.status(204).json({
         message: "Files deleted successfully",
         deletedBook,

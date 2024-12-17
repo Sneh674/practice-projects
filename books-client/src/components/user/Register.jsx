@@ -1,33 +1,42 @@
-import {useState} from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
+    name: "",
+    email: "",
+    password: "",
   });
 
-  const handleChange=(e)=>{
-    const {name, value}=e.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  }
-  const handleSubmit=async(e)=>{
+  };
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/api/users/register', formData);
-      console.log('Registration successful:', response.data);
-      navigate('/allbooks')
+      const response = await axios.post(
+        "http://localhost:4000/api/users/register",
+        formData
+      );
+      console.log("Registration successful:", response.data);
+      console.log("Login successful:", response.data);
+      const token = response.data.accesstoken;
+      localStorage.setItem("authToken", token);
+      navigate("/allbooks");
     } catch (error) {
-      console.error('Error during registration:', error.response?.data || error.message);
-      alert('Registration failed!');
+      console.error(
+        "Error during registration:",
+        error.response?.data || error.message
+      );
+      alert("Registration failed!");
     }
-  }
+  };
   return (
     <div>
       <Link to="/next">back</Link>
@@ -40,6 +49,6 @@ const Register = () => {
       </form>
     </div>
   );
-}
+};
 
-export default Register
+export default Register;
