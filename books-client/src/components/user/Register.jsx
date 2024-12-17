@@ -38,16 +38,56 @@ const Register = () => {
     }
   };
   return (
-    <div>
-      <Link to="/next">back</Link>
-      <div>Register Page</div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" id="" onChange={handleChange} />
-        <input type="email" name="email" id="" onChange={handleChange} />
-        <input type="text" name="password" id="" onChange={handleChange} />
-        <input type="submit" value="Submit" />
+    <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-8">
+      <Link
+        to="/next"
+        className="text-blue-400 hover:text-blue-500 text-lg mb-4"
+      >
+        Back
+      </Link>
+
+      <div className="text-2xl font-semibold mb-6">Register Page</div>
+
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-4 w-full max-w-sm">
+        {/* Name Field */}
+        <label htmlFor="name" className="text-sm text-gray-300">Name</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          onChange={handleChange}
+          className="p-2 bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+        {/* Email Field */}
+        <label htmlFor="email" className="text-sm text-gray-300">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          onChange={handleChange}
+          className="p-2 bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+        {/* Password Field */}
+        <label htmlFor="password" className="text-sm text-gray-300">Password</label>
+        <input
+          type="text"
+          name="password"
+          id="password"
+          onChange={handleChange}
+          className="p-2 bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+        {/* Submit Button */}
+        <input
+          type="submit"
+          value="Submit"
+          className="mt-4 p-2 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-700 transition duration-200"
+        />
       </form>
     </div>
+
   );
 };
 

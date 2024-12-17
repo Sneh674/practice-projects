@@ -53,24 +53,78 @@ const Createbook = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="m-0 p-7 bg-slate-700 min-h-screen text-cyan-300">Loading...</div>;
   }
   
   return (
-    <div>
-      <Link to="/allbooksuser">Back to All Books</Link>
-      <div>Add book</div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="title" onChange={handleChange} />
-        <input type="text" name="genre" onChange={handleChange} />
-        <input type="file" name="coverimg" id="" onChange={handleChange} />
-        <input type="file" name="file" id="" onChange={handleChange} />
-        <input type="submit" value="Submit" />
-      </form>
-      <div>{bookData.title}</div>
-      <div>{bookData.coverimg && bookData.coverimg.name}</div>
-      <div>{bookData.file && bookData.file.name}</div>
+    <div className="m-0 p-7 bg-slate-700 min-h-screen text-cyan-300">
+    <Link to="/allbooksuser" className="text-lg mb-4 inline-block">Back to All Books</Link>
+    <div className="text-2xl font-semibold mb-6">Add Book</div>
+  
+    <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
+      <div>
+        <label htmlFor="title" className="block text-sm font-medium text-cyan-300">Title</label>
+        <input
+          type="text"
+          name="title"
+          onChange={handleChange}
+          id="title"
+          className="w-72 p-2 mt-2 border border-cyan-500 rounded-md bg-slate-800 text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        />
+      </div>
+  
+      <div>
+        <label htmlFor="genre" className="block text-sm font-medium text-cyan-300">Genre</label>
+        <input
+          type="text"
+          name="genre"
+          onChange={handleChange}
+          id="genre"
+          className="w-72 p-2 mt-2 border border-cyan-500 rounded-md bg-slate-800 text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        />
+      </div>
+  
+      <div>
+        <label htmlFor="coverimg" className="block text-sm font-medium text-cyan-300">Cover Image</label>
+        <input
+          type="file"
+          name="coverimg"
+          onChange={handleChange}
+          id="coverimg"
+          className="w-72 p-2 mt-2 border border-cyan-500 rounded-md bg-slate-800 text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        />
+      </div>
+  
+      <div>
+        <label htmlFor="file" className="block text-sm font-medium text-cyan-300">File</label>
+        <input
+          type="file"
+          name="file"
+          onChange={handleChange}
+          id="file"
+          className="w-72 p-2 mt-2 border border-cyan-500 rounded-md bg-slate-800 text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        />
+      </div>
+  
+      <div>
+        <input
+          type="submit"
+          value="Submit"
+          className="w-72 p-2 mt-4 bg-cyan-500 text-slate-700 rounded-md cursor-pointer hover:bg-cyan-600"
+        />
+      </div>
+    </form>
+  
+    <div className="mt-6">
+      <div className="text-lg font-medium">Book Data:</div>
+      <div>Title: {bookData.title}</div>
+      <div>Genre: {bookData.genre}</div>
+      <div>Cover Image: {bookData.coverimg && bookData.coverimg.name}</div>
+      <div>File: {bookData.file && bookData.file.name}</div>
     </div>
+  </div>
+  
+
   );
 };
 

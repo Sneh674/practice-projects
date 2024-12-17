@@ -73,23 +73,66 @@ const Editbook = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className="m-0 p-7 bg-slate-700 min-h-screen text-cyan-300">Loading...</div>;
     }
 
     return (
-        <div>
-            <Link to="/allbooksuser">Back to All Books</Link>
-            <div>Edit Book</div>
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="title" value={bookData.title} onChange={handleChange} />
-                <input type="text" name="genre" value={bookData.genre} onChange={handleChange} />
-                <input type="file" name="coverimg" id="" onChange={handleChange} />
-                <input type="file" name="file" id="" onChange={handleChange} />
-                <input type="submit" value="Submit" />
-            </form>
-            {/* <div>{bookData}</div> */}
-            {/* <div>{id}</div> */}
-        </div>
+        <div className="m-0 p-7 bg-slate-700 min-h-screen text-cyan-300">
+    <Link to="/allbooksuser" className="text-xl underline">Back to All Books</Link>
+
+    <div className="text-2xl mt-5 mb-4 font-semibold">Edit Book</div>
+
+    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+        {/* Title Field */}
+        <label htmlFor="title" className="text-lg">Title:</label>
+        <input
+            type="text"
+            name="title"
+            value={bookData.title}
+            onChange={handleChange}
+            className="w-72 p-2 border border-cyan-500 bg-slate-800 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+        />
+
+        {/* Genre Field */}
+        <label htmlFor="genre" className="text-lg">Genre:</label>
+        <input
+            type="text"
+            name="genre"
+            value={bookData.genre}
+            onChange={handleChange}
+            className="w-72 p-2 border border-cyan-500 bg-slate-800 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+        />
+
+        {/* Cover Image Field */}
+        <label htmlFor="coverimg" className="text-lg">Cover Image:</label>
+        <input
+            type="file"
+            name="coverimg"
+            id="coverimg"
+            onChange={handleChange}
+            className="w-72 p-2 border border-cyan-500 bg-slate-800 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+        />
+
+        {/* File Field */}
+        <label htmlFor="file" className="text-lg">Book File:</label>
+        <input
+            type="file"
+            name="file"
+            id="file"
+            onChange={handleChange}
+            className="w-72 p-2 border border-cyan-500 bg-slate-800 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+        />
+
+        {/* Submit Button */}
+        <input
+            type="submit"
+            value="Submit"
+            className="w-72 p-2 mt-4 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition duration-200"
+        />
+    </form>
+</div>
+
+
     );
 };
 

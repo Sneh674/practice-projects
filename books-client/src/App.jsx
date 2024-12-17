@@ -43,10 +43,15 @@ function AppContent() {
   }, []);
 
   return (
-    <div className="bg-black text-white">
-      <h1>hello</h1>
-      <div>{count}</div>
-      <Link to="/next">Next</Link>
+    <div className="bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-700 text-white min-h-screen flex flex-col justify-center items-center p-8">
+      <h1 className="text-4xl font-extrabold mb-4">Hello</h1>
+      <div className="text-2xl font-semibold mb-6">{count}</div>
+      <Link
+        to="/next"
+        className="px-6 py-3 bg-indigo-500 text-lg font-medium rounded-md hover:bg-indigo-600 transition duration-300"
+      >
+        Next
+      </Link>
     </div>
   );
 }

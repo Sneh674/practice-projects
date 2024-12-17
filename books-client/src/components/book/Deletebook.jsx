@@ -32,43 +32,66 @@ const Deletebook = () => {
   };
 
   useEffect(() => {
-    console.log("fecting api")
+    console.log("fecting api");
     fetchAPI();
   }, []);
 
   const handleClick = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      console.log("trial")
-      const response = await axios.delete(`http://localhost:4000/api/books/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-        },
-      });
-      console.log("trial")
-      console.log('Deletion successful:', response.data);
-      alert("Book deleted")
-      navigate('/allbooksuser')
+      console.log("trial");
+      const response = await axios.delete(
+        `http://localhost:4000/api/books/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+      console.log("trial");
+      console.log("Deletion successful:", response.data);
+      alert("Book deleted");
+      navigate("/allbooksuser");
     } catch (error) {
-      console.error('Error during deleting:', error.response?.data || error.message);
-      alert('Deletion failed!');
+      console.error(
+        "Error during deleting:",
+        error.response?.data || error.message
+      );
+      alert("Deletion failed!");
     }
-  }
+  };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="m-0 p-7 bg-slate-700 min-h-screen text-cyan-300">Loading...</div>;
   }
 
-
   return (
-    <div>
-      <Link to="/allbooksuser">Back to All Books</Link>
-      <div>Delete Book</div>
-      <div>
-        <li>Title: {bookData.title}</li>
-        <li><img src={bookData.coverimg} alt={bookData.title} style={{ width: "100px", height: "100px" }} /></li>
+    <div className="m-0 p-7 bg-slate-700 min-h-screen text-cyan-300">
+      <Link to="/allbooksuser" className="text-lg mb-4 inline-block">
+        Back to All Books
+      </Link>
+
+      <div className="text-2xl font-semibold mb-6">Delete Book</div>
+
+      <div className="mb-6">
+        <ul className="list-none space-y-4">
+          <li className="text-lg font-medium">Title: {bookData.title}</li>
+          <li>
+            <img
+              src={bookData.coverimg}
+              alt={bookData.title}
+              className="w-32 h-48 object-cover rounded-lg border border-cyan-500"
+            />
+          </li>
+        </ul>
       </div>
-      <button onClick={handleClick}>Delete</button>
+
+      <button
+        onClick={handleClick}
+        className="w-72 p-2 mt-4 bg-red-500 text-white rounded-md cursor-pointer hover:bg-red-600 transition duration-200"
+      >
+        Delete
+      </button>
     </div>
   );
 };
