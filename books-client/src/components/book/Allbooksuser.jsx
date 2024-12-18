@@ -62,7 +62,7 @@ const Allbooksuser = () => {
                                 <img
                                     src={book.coverimg}
                                     alt={`${book.title} cover`}
-                                    className="w-32 h-48 object-cover rounded-lg mt-2 mb-2 border border-cyan-500"
+                                    className="w-32 h-48 object-cover rounded-lg mt-2 mb-2 border border-cyan-500 hover:shadow-xl hover:shadow-cyan-500 transition-all duration-200"
                                 />
                                 <div className="mt-2">
                                     <p className="truncate text-md">File: </p>
@@ -70,7 +70,7 @@ const Allbooksuser = () => {
                                         href={book.file}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-blue-500 underline"
+                                        className="text-blue-500 underline hover:shadow-xl hover:shadow-cyan-500 transition-all duration-200"
                                     >
                                         View/Download File
                                     </a>
@@ -99,7 +99,7 @@ const Allbooksuser = () => {
                                 <img
                                     src={book.coverimg}
                                     alt={`${book.title} cover`}
-                                    className="w-32 h-48 object-cover rounded-lg mt-2 mb-2 border border-cyan-500"
+                                    className="w-32 h-48 object-cover rounded-lg mt-2 mb-2 border border-cyan-500 hover:shadow-xl hover:shadow-cyan-500 transition-all duration-200"
                                 />
                                 <div className="mt-2">
                                     <p className="truncate text-md">File: </p>
@@ -107,7 +107,7 @@ const Allbooksuser = () => {
                                         href={book.file}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-blue-500 underline"
+                                        className="text-blue-500 underline hover:shadow-xl hover:shadow-cyan-500 transition-all duration-200"
                                     >
                                         View/Download File
                                     </a>
