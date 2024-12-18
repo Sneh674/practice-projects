@@ -9,8 +9,8 @@ const Allbooksuser = () => {
 
     const fetchAPI = async () => {
         try {
-            const token=localStorage.getItem('authToken');
-            if(!token){navigate("/")}
+            const token = localStorage.getItem('authToken');
+            if (!token) { navigate("/") }
             console.log("trial")
             const response = await axios.get(
                 "http://localhost:4000/api/books", {
@@ -34,14 +34,22 @@ const Allbooksuser = () => {
         fetchAPI();
     }, []);
 
+    const handleLogOut = () => {
+        localStorage.clear();
+        window.location.reload();
+    }
+
     return (
         <div className="m-0 p-7 bg-slate-700 min-h-screen">
-            <Link
-                to="/createbook"
-                className="text-cyan-500 text-lg bg-slate-800 p-2 m-2 rounded-md"
-            >
-                Add Book
-            </Link>
+            <div className="linkbutton flex justify-between">
+                <button onClick={handleLogOut} className="text-cyan-500 text-lg bg-slate-800 p-2 m-2 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200">Log Out</button>
+                <Link
+                    to="/createbook"
+                    className="text-cyan-500 text-lg bg-slate-800 p-2 m-2 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200"
+                >
+                    Add Book
+                </Link>
+            </div>
             <div className="userbooks mt-5">
                 <div className="text-cyan-300 text-2xl mb-2">Your books</div>
                 <div className="flex text-cyan-200 text-lg">
@@ -56,7 +64,18 @@ const Allbooksuser = () => {
                                     alt={`${book.title} cover`}
                                     className="w-32 h-48 object-cover rounded-lg mt-2 mb-2 border border-cyan-500"
                                 />
-                                <div className="links flex flex-col space-y-2">
+                                <div className="mt-2">
+                                    <p className="truncate text-md">File: </p>
+                                    <a
+                                        href={book.file}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-500 underline"
+                                    >
+                                        View/Download File
+                                    </a>
+                                </div>
+                                <div className="links flex flex-col space-y-2 mt-2">
                                     <Link to={`/editbook/${book._id}`} className="underline">Edit</Link>
                                     <Link to={`/deletebook/${book._id}`} className="underline">Delete</Link>
                                 </div>
@@ -80,8 +99,19 @@ const Allbooksuser = () => {
                                 <img
                                     src={book.coverimg}
                                     alt={`${book.title} cover`}
-                                    className="w-32 h-48 object-cover rounded-lg mt-2 mb-2"
+                                    className="w-32 h-48 object-cover rounded-lg mt-2 mb-2 border border-cyan-500"
                                 />
+                                <div className="mt-2">
+                                    <p className="truncate text-md">File: </p>
+                                    <a
+                                        href={book.file}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-500 underline"
+                                    >
+                                        View/Download File
+                                    </a>
+                                </div>
                                 {/* <Link to={`/book/${book._id}`}>View Details</Link> */}
                             </div>
                         ))
