@@ -40,8 +40,8 @@ const Allbooksuser = () => {
     }
 
     return (
-        <div className="m-0 p-7 bg-slate-700 min-h-screen">
-            <div className="linkbutton flex justify-between">
+        <div className="m-0 p-0 bg-slate-500 min-h-screen">
+            <div className="linkbutton flex justify-between p-5 bg-gradient-to-b from-slate-700 via-slate-600 to-slate-500">
                 <button onClick={handleLogOut} className="text-cyan-500 text-lg bg-slate-800 p-2 m-2 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200">Log Out</button>
                 <Link
                     to="/createbook"
@@ -50,13 +50,13 @@ const Allbooksuser = () => {
                     Add Book
                 </Link>
             </div>
-            <div className="userbooks mt-5">
+            <div className="userbooks p-5 pt-12 bg-gradient-to-b from-slate-500 via-slate-600 to-slate-700">
                 <div className="text-cyan-300 text-2xl mb-2">Your books</div>
-                <div className="flex text-cyan-200 text-lg">
+                <div className="flex text-cyan-200 text-lg flex-wrap overflow-y-hidden justify-evenly">
                     {userrBooks.length > 0 ? (
                         userrBooks.map((book) => (
-                            <div key={book._id} style={{ width: "300px" }}>
-                                <h3 className="truncate text-xl font-semibold">Title : {book.title}</h3>
+                            <div key={book._id} style={{ width: "300px" }} className="mb-5">
+                                <h3 className="truncate text-xl font-semibold mt-5">Title : {book.title}</h3>
                                 <p className="truncate text-md">Genre : {book.genre}</p>
                                 <p className="truncate text-md">Author : {book.author}</p>
                                 <img
@@ -87,13 +87,13 @@ const Allbooksuser = () => {
                     )}
                 </div>
             </div>
-            <div className="otherbooks mt-7 ">
+            <div className="otherbooks p-5 pt-12 bg-gradient-to-b from-slate-700 via-slate-600 to-slate-500">
                 <div className="text-cyan-300 text-2xl mb-2">Other books</div>
-                <div className="flex text-cyan-200 text-lg">
+                <div className="flex text-cyan-200 text-lg flex-wrap overflow-y-hidden justify-evenly">
                     {otherrBooks.length > 0 ? (
                         otherrBooks.map((book) => (
-                            <div key={book._id} style={{ width: "300px" }}>
-                                <h3 className="truncate text-xl font-semibold">Title : {book.title}</h3>
+                            <div key={book._id} style={{ width: "300px" }} className="mb-5">
+                                <h3 className="truncate text-xl font-semibold mt-5">Title : {book.title}</h3>
                                 <p className="truncate text-md">Genre : {book.genre}</p>
                                 <p className="truncate text-md">Author : {book.author}</p>
                                 <img
