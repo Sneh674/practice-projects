@@ -6,6 +6,12 @@ const Allbooksuser = () => {
   const navigate = useNavigate();
   const [userrBooks, setUserrBooks] = useState([]);
   const [otherrBooks, setOtherrBooks] = useState([]);
+  const [searchType, setSearchType] = useState('title');
+  const [searchValue, setSearchValue]=useState('');
+
+  const handleSearchTypeChange = (e) => {
+    setSearchType(e.target.value);
+  };
 
   const fetchAPI = async () => {
     try {
@@ -39,6 +45,24 @@ const Allbooksuser = () => {
     window.location.reload();
   };
 
+  const handleSearch=async()=>{
+    console.log(searchValue,searchType)
+    if (searchValue.trim() === '') {
+      // Do nothing if searchValue is empty
+      return;
+    }
+    try {
+      const response = await axios.get(`http://localhost:4000/api/books/searchby${searchType}/${searchValue}`)
+      console.log(response.data)
+      if(response){
+        console.log(response.data)
+      }
+    } catch (error) {
+      console.log(`error searching by ${searchType}: ${error}`)
+    }
+    setSearchValue('')
+  }
+
   return (
     <div className="m-0 p-0 bg-slate-500 min-h-screen">
       <div className="linkbutton flex justify-between p-5 bg-gradient-to-b from-slate-700 via-slate-600 to-slate-500">
@@ -48,6 +72,15 @@ const Allbooksuser = () => {
         >
           Log Out
         </button>
+        <div className="search">
+          <select value={searchType} onChange={handleSearchTypeChange}>
+            <option value="title">Title</option>
+            <option value="author">Author</option>
+            <option value="genre">Genre</option>
+          </select>
+          <input type="text" name="searchbar" value={searchValue} placeholder="Search" onChange={(e)=>{setSearchValue(e.target.value)}}/>
+          <button onClick={handleSearch}>Search</button>
+        </div>
         <Link
           to="/createbook"
           className="text-cyan-500 text-lg bg-slate-800 p-2 m-2 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200"
