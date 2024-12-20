@@ -107,7 +107,7 @@ const forgotPassword=async(req,res,next)=>{
             service: 'gmail',
             auth: {
                 user: process.env.MY_EMAIL,
-                pass: 'dfdt cjdh ozfy yjmd',
+                pass: process.env.MY_PASSWORD,
             },
             tls: {
                 rejectUnauthorized: false,  // This helps if there are certificate issues
