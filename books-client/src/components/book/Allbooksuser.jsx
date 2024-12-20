@@ -93,83 +93,24 @@ const Allbooksuser = () => {
 
   return (
     <div className="m-0 p-0 bg-slate-500 min-h-screen">
-      <div className="linkbutton flex justify-between p-5 bg-gradient-to-b from-slate-700 via-slate-600 to-slate-500">
+      <div className="linkbutton flex flex-wrap justify-between items-center gap-4 p-5 bg-gradient-to-b from-slate-700 via-slate-600 to-slate-500">
         <button
           onClick={handleLogOut}
-          className="text-cyan-500 text-lg bg-slate-800 p-2 m-2 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200"
+          className="text-cyan-500 text-lg bg-slate-800 p-2 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200"
         >
           Log Out
         </button>
-        {/* <div className="search relative">
-          <div className="flex items-center">
-            <select
-              value={searchType}
-              onChange={handleSearchTypeChange}
-              className="p-2 rounded-md"
-            >
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="genre">Genre</option>
-            </select>
-            <input
-              type="text"
-              name="searchbar"
-              value={searchValue}
-              placeholder="Search"
-              onChange={handleSearchChange}
-              className="p-2 ml-2 rounded-md flex-1"
-            />
-            <button
-              onClick={handleSearch}
-              className="p-2 ml-2 bg-slate-800 text-cyan-500 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200"
-            >
-              Search
-            </button>
-          </div>
-          {searchResults.length > 0 && (
-            <div className="absolute bg-white text-black mt-2 w-full border rounded-md shadow-lg max-h-60 overflow-y-auto">
-              {searchType === "title" &&
-                searchResults.map((book) => (
-                  <div
-                    key={book._id}
-                    className="p-2 hover:bg-slate-200 cursor-pointer"
-                    onClick={()=>setSearchValue(book.title)}
-                  >
-                    {book.title}
-                  </div>
-                ))}
-              {searchType === "author" &&
-                searchResults.map((book) => (
-                  <div
-                    key={book._id}
-                    className="p-2 hover:bg-slate-200 cursor-pointer"
-                    onClick={()=>setSearchValue(book.author)}
-                  >
-                    {book.author}
-                  </div>
-                ))}
-              {searchType === "genre" &&
-                searchResults.map((book) => (
-                  <div
-                    key={book._id}
-                    className="p-2 hover:bg-slate-200 cursor-pointer"
-                    onClick={() => setSearchValue(book.genre)}
-                  >
-                    {book.genre}
-                  </div>
-                ))}
-            </div>
-          )}
-        </div> */}
-        <SearchBar />
-
+        <div className="flex-1 min-w-[200px]">
+          <SearchBar />
+        </div>
         <Link
           to="/createbook"
-          className="text-cyan-500 text-lg bg-slate-800 p-2 m-2 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200"
+          className="text-cyan-500 text-lg bg-slate-800 p-2 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200"
         >
           Add Book
         </Link>
       </div>
+
       <div className="userbooks p-5 pt-12 bg-gradient-to-b from-slate-500 via-slate-600 to-slate-700">
         <div className="text-cyan-300 text-2xl mb-2">Your books</div>
         <div className="flex text-cyan-200 text-lg flex-wrap justify-evenly">

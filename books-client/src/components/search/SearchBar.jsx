@@ -27,8 +27,6 @@ const SearchBar = () => {
       );
 
       const results = response.data || [];
-
-      // Filter unique values based on the search type
       const uniqueResults = results.filter(
         (item, index, self) =>
           index ===
@@ -60,12 +58,12 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="search relative">
-      <div className="flex items-center">
+    <div className="search relative max-w-full sm:max-w-md w-full px-2">
+      <div className="flex items-center gap-2 flex-wrap">
         <select
           value={searchType}
           onChange={handleSearchTypeChange}
-          className="p-2 rounded-md"
+          className="p-2 rounded-md border border-gray-300 bg-white flex-shrink-0"
         >
           <option value="title">Title</option>
           <option value="author">Author</option>
@@ -76,34 +74,36 @@ const SearchBar = () => {
           value={searchValue}
           placeholder="Search"
           onChange={handleSearchChange}
-          className="p-2 ml-2 rounded-md flex-1"
+          className="p-2 rounded-md flex-1 border border-gray-300"
         />
         <button
           onClick={handleSearchClick}
-          className="p-2 ml-2 bg-slate-800 text-cyan-500 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200"
+          className="p-2 bg-slate-800 text-cyan-500 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200 flex-shrink-0"
         >
           Search
         </button>
       </div>
       {searchResults.length > 0 && (
-        <div className="absolute bg-white text-black mt-2 w-full border rounded-md shadow-lg max-h-60 overflow-y-auto">
+        <div className="absolute bg-white text-black mt-2 w-full border rounded-md shadow-lg max-h-60 overflow-y-auto z-10">
           {searchResults.map((result) => (
             <div
               key={
                 searchType === "title"
                   ? result.title
                   : searchType === "author"
-                  ? result.name // Assuming `name` is the author field
+                  ? result.name
                   : result.genre
               }
               className="p-2 hover:bg-slate-200 cursor-pointer"
-              onClick={() => handleResultClick(
-                searchType === "title"
-                  ? result.title
-                  : searchType === "author"
-                  ? result.name
-                  : result.genre
-              )}
+              onClick={() =>
+                handleResultClick(
+                  searchType === "title"
+                    ? result.title
+                    : searchType === "author"
+                    ? result.name
+                    : result.genre
+                )
+              }
             >
               {searchType === "title"
                 ? result.title
