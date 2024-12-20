@@ -62,6 +62,8 @@ const Login = () => {
           className="p-2 bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
 
+        <Link to='/forgotpassword' className='text-red-600'>Forgot Password</Link>
+
         {/* Submit Button */}
         <input
           type="submit"

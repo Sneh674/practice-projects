@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SearchByAuthor = () => {
+const Reset = () => {
   return (
     <div>
       hello
@@ -8,4 +8,4 @@ const SearchByAuthor = () => {
   )
 }
 
-export default SearchByAuthor
+export default Reset

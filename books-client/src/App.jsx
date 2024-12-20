@@ -17,6 +17,8 @@ import Deletebook from "./components/book/Deletebook";
 import Allbooksuser from "./components/book/Allbooksuser";
 import SearchByTitle from "./components/search/SearchByTitle";
 import SearchByGenre from "./components/search/SearchByGenre";
+import Forgot from "./components/user/Forgot";
+import Reset from "./components/user/Reset";
 
 function AppContent() {
   const [count, setCount] = useState(0);
@@ -75,6 +77,14 @@ function App() {
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path:'/forgotpassword',
+      element: <Forgot />
+    },
+    {
+      path: '/resetpassword',
+      element: <Reset />
     },
     {
       path: "/allbooks",

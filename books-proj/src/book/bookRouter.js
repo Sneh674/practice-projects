@@ -46,8 +46,8 @@ bookRouter.delete("/:id",authenticate,deleteBook)
 bookRouter.get("/searchbytitle/:title",showTitle)
 bookRouter.get("/searchbygenre/:genre",showGenre)
 bookRouter.get("/searchbyauthor/:author",showAuthors)
-bookRouter.get("/searchbooksbytitle/:title",showBooksByTitle)
-bookRouter.get("/searchbooksbygenre/:genre",showBooksByGenre)
+// bookRouter.get("/searchbooksbytitle/:title",showBooksByTitle)
+// bookRouter.get("/searchbooksbygenre/:genre",showBooksByGenre)
 
 // bookRouter.post("/test", upload.single("file"), (req, res) => {
 //   console.log(req.file);
