@@ -1,6 +1,6 @@
 import express from "express";
 import { createBook, updateBook, listBook, listBookSingle, deleteBook, listBookUser } from "./bookController.js";
-import { showAuthors, showTitle, showGenre, showBooksByTitle, showBooksByGenre } from "./bookController2.js";
+import { showAuthors, showTitle, showGenre, getBooksByAuthors } from "./bookController2.js";
 import multer from "multer";
 import path from "node:path";
 import { dirname } from "node:path";
@@ -48,6 +48,7 @@ bookRouter.get("/searchbygenre/:genre",showGenre)
 bookRouter.get("/searchbyauthor/:author",showAuthors)
 // bookRouter.get("/searchbooksbytitle/:title",showBooksByTitle)
 // bookRouter.get("/searchbooksbygenre/:genre",showBooksByGenre)
+bookRouter.get("/searchbooksbyauthor/:author",getBooksByAuthors)
 
 // bookRouter.post("/test", upload.single("file"), (req, res) => {
 //   console.log(req.file);

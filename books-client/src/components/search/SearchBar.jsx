@@ -50,6 +50,7 @@ const SearchBar = () => {
     if (searchValue === "") return;
     if (searchType === "title") navigate(`/searchbytitle/${searchValue}`);
     else if (searchType === "genre") navigate(`/searchbygenre/${searchValue}`);
+    else if(searchType == 'author') navigate(`/searchbyauthor/${searchValue}`)
   };
 
   const handleResultClick = (value) => {

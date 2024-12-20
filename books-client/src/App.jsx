@@ -19,6 +19,7 @@ import SearchByTitle from "./components/search/SearchByTitle";
 import SearchByGenre from "./components/search/SearchByGenre";
 import Forgot from "./components/user/Forgot";
 import Reset from "./components/user/Reset";
+import SearchByAuthor from "./components/search/SearchByAuthor";
 
 function AppContent() {
   const [count, setCount] = useState(0);
@@ -113,6 +114,10 @@ function App() {
     {
       path: "/searchbygenre/:genre",
       element: <SearchByGenre />
+    },
+    {
+      path: "/searchbyauthor/:author",
+      element: <SearchByAuthor />
     }
   ]);
 
