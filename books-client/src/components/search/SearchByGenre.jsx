@@ -3,8 +3,8 @@ import axios from "axios";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import SearchBar from './SearchBar';
 
-const SearchByTitle = () => {
-    const { title } = useParams();
+const SearchByGenre = () => {
+    const { genre } = useParams(); // Use genre from URL params
     const navigate = useNavigate();
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ const SearchByTitle = () => {
                 navigate("/");
                 return;
             }
-            const response = await axios.get(`http://localhost:4000/api/books/searchbytitle/${title}`);
+            const response = await axios.get(`http://localhost:4000/api/books/searchbygenre/${genre}`);
             setBooks(response.data);
             setLoading(false);
         } catch (error) {
@@ -28,7 +28,7 @@ const SearchByTitle = () => {
 
     useEffect(() => {
         fetchAPI();
-    }, [title]);
+    }, [genre]);
 
     if (loading) return <div className="text-center text-lg">Loading...</div>;
 
@@ -41,12 +41,12 @@ const SearchByTitle = () => {
                 </div>
 
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                    Books Search Results for "{title}"
+                    Books Search Results for Genre "{genre}"
                 </h2>
 
                 {books.length === 0 ? (
                     <div className="text-gray-500 text-lg">
-                        No books found with the title "{title}"
+                        No books found for the genre "{genre}"
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -83,4 +83,4 @@ const SearchByTitle = () => {
     );
 };
 
-export default SearchByTitle;
+export default SearchByGenre;

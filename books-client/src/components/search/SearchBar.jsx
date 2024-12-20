@@ -25,13 +25,23 @@ const SearchBar = () => {
       const response = await axios.get(
         `http://localhost:4000/api/books/searchby${searchType}/${newValue}`
       );
-      if (searchType === "author") {
-        // If searching by author, update searchResults with user names (authors)
-        setSearchResults(response.data || []);
-      } else {
-        // For title and genre, update the results as usual
-        setSearchResults(response.data || []);
-      }
+
+      const results = response.data || [];
+
+      // Filter unique values based on the search type
+      const uniqueResults = results.filter(
+        (item, index, self) =>
+          index ===
+          self.findIndex((t) =>
+            searchType === "title"
+              ? t.title === item.title
+              : searchType === "author"
+              ? t.name === item.name // Assuming `name` is the author field
+              : t.genre === item.genre
+          )
+      );
+
+      setSearchResults(uniqueResults);
     } catch (error) {
       console.error(`Error searching by ${searchType}: ${error}`);
       setSearchResults([]);
@@ -39,11 +49,9 @@ const SearchBar = () => {
   };
 
   const handleSearchClick = async () => {
-    console.log("search clicked")
-    if(searchValue==''){return}
-    if(searchType=='title'){navigate(`/searchbytitle/${searchValue}`)}
-    else if(searchType=='genre'){navigate(`/searchbygenre/${searchValue}`)}
-
+    if (searchValue === "") return;
+    if (searchType === "title") navigate(`/searchbytitle/${searchValue}`);
+    else if (searchType === "genre") navigate(`/searchbygenre/${searchValue}`);
   };
 
   const handleResultClick = (value) => {
@@ -81,20 +89,26 @@ const SearchBar = () => {
         <div className="absolute bg-white text-black mt-2 w-full border rounded-md shadow-lg max-h-60 overflow-y-auto">
           {searchResults.map((result) => (
             <div
-              key={result._id}
+              key={
+                searchType === "title"
+                  ? result.title
+                  : searchType === "author"
+                  ? result.name // Assuming `name` is the author field
+                  : result.genre
+              }
               className="p-2 hover:bg-slate-200 cursor-pointer"
               onClick={() => handleResultClick(
                 searchType === "title"
                   ? result.title
                   : searchType === "author"
-                  ? result.name // Assuming `name` is the author field in userModel
+                  ? result.name
                   : result.genre
               )}
             >
               {searchType === "title"
                 ? result.title
                 : searchType === "author"
-                ? result.name // Displaying author's name
+                ? result.name
                 : result.genre}
             </div>
           ))}
