@@ -1,0 +1,85 @@
+import { useState, useEffect } from 'react';
+import axios from "axios";
+import { useNavigate, Link, useParams } from "react-router-dom";
+import SearchBar from './SearchBar';
+
+const SearchByTitle = () => {
+    const { title } = useParams(); // Destructure the title from URL params
+    const navigate = useNavigate();
+    const [books, setBooks] = useState([]); // Store the books in state
+    const [loading, setLoading] = useState(true); // Track loading state
+    const [error, setError] = useState(null); // Track any errors
+
+    const fetchAPI = async () => {
+        try {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                navigate("/");
+                return;
+            }
+            const response = await axios.get(`http://localhost:4000/api/books/searchbytitle/${title}`);
+            console.log(response)
+            if(!response){console.log("no found book")}
+            setBooks(response.data); // Set the fetched books in the state
+            setLoading(false); // Set loading to false once the data is fetched
+        } catch (error) {
+            setBooks([])
+            setLoading(false); // Set loading to false in case of error
+        }
+    };
+
+    useEffect(() => {
+        fetchAPI();
+    }, [title]);
+
+    if (loading) return <div className="text-center text-lg">Loading...</div>; // Display loading message while fetching data
+
+    // if (error) return <div className="text-center text-red-500">{error}</div>; // Display error message if any
+
+    return (
+        <div className="container mx-auto p-6 bg-slate-400"> {/* Background set to blue */}
+            <div className="header flex items-center justify-between mb-6">
+                <div>
+                    <Link to="/allbooksuser" className="text-blue-500 hover:text-blue-700 text-lg">Go Back</Link>
+                </div>
+
+                <SearchBar />
+            </div>
+
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Books Search Results for "{title}"</h2>
+
+            {books.length === 0 ? (
+                <div className="text-gray-500 text-lg">No books found with the title "{title}"</div>
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {books.map((book) => (
+                        <div key={book._id} className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-all ease-in-out duration-200">
+                            <img
+                                src={book.coverimg}
+                                alt={`${book.title} cover`}
+                                className="w-full h-48 object-cover rounded-lg mb-4"
+                            />
+                            <h3 className="text-xl font-semibold text-gray-800">{book.title}</h3>
+                            <p className="text-md text-gray-600">Genre: {book.genre}</p>
+                            <p className="text-md text-gray-600">Author: {book.author}</p>
+
+                            <div className="mt-3">
+                                <p className="truncate text-md text-gray-600">File: </p>
+                                <a
+                                    href={book.file}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-500 underline hover:text-blue-700"
+                                >
+                                    View/Download File
+                                </a>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default SearchByTitle;

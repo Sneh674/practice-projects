@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import SearchBar from "../search/SearchBar";
 
 const Allbooksuser = () => {
   const navigate = useNavigate();
   const [userrBooks, setUserrBooks] = useState([]);
   const [otherrBooks, setOtherrBooks] = useState([]);
-  const [searchType, setSearchType] = useState('title');
-  const [searchValue, setSearchValue]=useState('');
+  // const [searchType, setSearchType] = useState('title');
+  // const [searchValue, setSearchValue] = useState('');
+  // const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearchTypeChange = (e) => {
-    setSearchType(e.target.value);
-  };
+  // const handleSearchTypeChange = (e) => {
+  //   setSearchType(e.target.value);
+  // };
 
   const fetchAPI = async () => {
     try {
@@ -19,15 +21,14 @@ const Allbooksuser = () => {
       if (!token) {
         navigate("/");
       }
-      console.log("trial");
       const response = await axios.get("http://localhost:4000/api/books", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       });
-      console.log(response.data.userBooks);
+      // console.log(response.data.userBooks);
       setUserrBooks(response.data.userBooks);
-      console.log(response.data.otherBooks);
+      // console.log(response.data.otherBooks);
       setOtherrBooks(response.data.otherBooks);
       // setBooks(response.data);
     } catch (error) {
@@ -36,7 +37,6 @@ const Allbooksuser = () => {
   };
 
   useEffect(() => {
-    console.log("trial");
     fetchAPI();
   }, []);
 
@@ -45,23 +45,51 @@ const Allbooksuser = () => {
     window.location.reload();
   };
 
-  const handleSearch=async()=>{
-    console.log(searchValue,searchType)
-    if (searchValue.trim() === '') {
-      // Do nothing if searchValue is empty
-      return;
-    }
-    try {
-      const response = await axios.get(`http://localhost:4000/api/books/searchby${searchType}/${searchValue}`)
-      console.log(response.data)
-      if(response){
-        console.log(response.data)
-      }
-    } catch (error) {
-      console.log(`error searching by ${searchType}: ${error}`)
-    }
-    setSearchValue('')
-  }
+  // const handleSearch = async () => {
+  //   console.log(searchValue, searchType)
+  //   if (searchValue.trim() === '') {
+  //     // Do nothing if searchValue is empty
+  //     return;
+  //   }
+  //   try {
+  //     const response = await axios.get(`http://localhost:4000/api/books/searchby${searchType}/${searchValue}`)
+  //     console.log(response.data)
+  //     if (response) {
+  //       console.log(response.data)
+  //     }
+  //   } catch (error) {
+  //     console.log(`error searching by ${searchType}: ${error}`)
+  //   }
+  //   setSearchValue('')
+  // }
+
+  // const handleSearchChange = async (e) => {
+  //   const newValue = e.target.value;
+  //   setSearchValue(newValue);
+
+  //   if (newValue.trim() === '') {
+  //     setSearchResults([]);
+  //     return;
+  //   }
+  //   try {
+  //     const response = await axios.get(`http://localhost:4000/api/books/searchby${searchType}/${newValue}`)
+  //     if (response) {
+  //       setSearchResults(response.data)
+  //       console.log(response.data)
+  //     }
+  //     else{
+  //       setSearchResults([]);
+  //     }
+  //   } catch (error) {
+  //     setSearchResults([]);
+  //     console.log(`error searching by ${searchType}: ${error}`)
+  //   }
+  // }
+
+  // const handleSearchSelect = (value) => {
+  //   console.log("Selected Search Value:", value);
+  //   // Implement further actions with the selected value
+  // };
 
   return (
     <div className="m-0 p-0 bg-slate-500 min-h-screen">
@@ -72,15 +100,69 @@ const Allbooksuser = () => {
         >
           Log Out
         </button>
-        <div className="search">
-          <select value={searchType} onChange={handleSearchTypeChange}>
-            <option value="title">Title</option>
-            <option value="author">Author</option>
-            <option value="genre">Genre</option>
-          </select>
-          <input type="text" name="searchbar" value={searchValue} placeholder="Search" onChange={(e)=>{setSearchValue(e.target.value)}}/>
-          <button onClick={handleSearch}>Search</button>
-        </div>
+        {/* <div className="search relative">
+          <div className="flex items-center">
+            <select
+              value={searchType}
+              onChange={handleSearchTypeChange}
+              className="p-2 rounded-md"
+            >
+              <option value="title">Title</option>
+              <option value="author">Author</option>
+              <option value="genre">Genre</option>
+            </select>
+            <input
+              type="text"
+              name="searchbar"
+              value={searchValue}
+              placeholder="Search"
+              onChange={handleSearchChange}
+              className="p-2 ml-2 rounded-md flex-1"
+            />
+            <button
+              onClick={handleSearch}
+              className="p-2 ml-2 bg-slate-800 text-cyan-500 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200"
+            >
+              Search
+            </button>
+          </div>
+          {searchResults.length > 0 && (
+            <div className="absolute bg-white text-black mt-2 w-full border rounded-md shadow-lg max-h-60 overflow-y-auto">
+              {searchType === "title" &&
+                searchResults.map((book) => (
+                  <div
+                    key={book._id}
+                    className="p-2 hover:bg-slate-200 cursor-pointer"
+                    onClick={()=>setSearchValue(book.title)}
+                  >
+                    {book.title}
+                  </div>
+                ))}
+              {searchType === "author" &&
+                searchResults.map((book) => (
+                  <div
+                    key={book._id}
+                    className="p-2 hover:bg-slate-200 cursor-pointer"
+                    onClick={()=>setSearchValue(book.author)}
+                  >
+                    {book.author}
+                  </div>
+                ))}
+              {searchType === "genre" &&
+                searchResults.map((book) => (
+                  <div
+                    key={book._id}
+                    className="p-2 hover:bg-slate-200 cursor-pointer"
+                    onClick={() => setSearchValue(book.genre)}
+                  >
+                    {book.genre}
+                  </div>
+                ))}
+            </div>
+          )}
+        </div> */}
+        <SearchBar />
+
         <Link
           to="/createbook"
           className="text-cyan-500 text-lg bg-slate-800 p-2 m-2 rounded-md hover:bg-cyan-500 hover:text-slate-800 transition-all duration-200"

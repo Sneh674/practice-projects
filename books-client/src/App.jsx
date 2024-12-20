@@ -15,6 +15,7 @@ import Createbook from "./components/book/Createbook";
 import Editbook from "./components/book/Editbook";
 import Deletebook from "./components/book/Deletebook";
 import Allbooksuser from "./components/book/Allbooksuser";
+import SearchByTitle from "./components/search/SearchByTitle";
 
 function AppContent() {
   const [count, setCount] = useState(0);
@@ -93,6 +94,10 @@ function App() {
     {
       path: "/allbooksuser",
       element: <Allbooksuser />
+    },
+    {
+      path: "/searchbytitle/:title",
+      element: <SearchByTitle />
     }
   ]);
 
