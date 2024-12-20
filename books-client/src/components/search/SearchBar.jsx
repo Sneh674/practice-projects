@@ -23,7 +23,7 @@ const SearchBar = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/books/searchby${searchType}/${newValue}`
+        `${import.meta.env.VITE_BACKEND_URL}api/books/searchby${searchType}/${newValue}`
       );
 
       const results = response.data || [];

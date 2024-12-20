@@ -21,7 +21,7 @@ const Deletebook = () => {
   const fetchAPI = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:4000/api/books/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}api/books/${id}`);
       console.log(response.data.book);
       // console.log(response.data);
       setBookData(response.data.book);
@@ -41,7 +41,7 @@ const Deletebook = () => {
     try {
       console.log("trial");
       const response = await axios.delete(
-        `http://localhost:4000/api/books/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}api/books/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,

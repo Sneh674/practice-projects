@@ -22,7 +22,7 @@ const Forgot = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:4000/api/users/forgotpassword",
+                `${import.meta.env.VITE_BACKEND_URL}api/users/forgotpassword`,
                 {
                     email,
                 }

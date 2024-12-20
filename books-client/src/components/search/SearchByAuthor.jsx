@@ -19,7 +19,7 @@ const SearchByAuthor = () => {
             }
 
             // API call to fetch books grouped by authors
-            const response = await axios.get(`http://localhost:4000/api/books/searchbooksbyauthor/${author}`);
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}api/books/searchbooksbyauthor/${author}`);
             setBooksData(response.data);  // Grouped authors and their books
             setLoading(false);
         } catch (error) {

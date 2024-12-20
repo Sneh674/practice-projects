@@ -27,8 +27,9 @@ function AppContent() {
 
   const fecthAPI = async () => {
     try {
+      // console.log("Backend URL:", import.meta.env.REACT_APP_BACKEND_URL);
       const response = await axios.get(
-        `http://localhost:4000/`
+        `${import.meta.env.VITE_BACKEND_URL}`
       );
       console.log(response);
       console.log(response.data);

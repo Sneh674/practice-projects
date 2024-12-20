@@ -16,7 +16,7 @@ const SearchByGenre = () => {
                 navigate("/");
                 return;
             }
-            const response = await axios.get(`http://localhost:4000/api/books/searchbygenre/${genre}`);
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}api/books/searchbygenre/${genre}`);
             setBooks(response.data);
             setLoading(false);
         } catch (error) {

@@ -7,13 +7,6 @@ const Allbooksuser = () => {
   const navigate = useNavigate();
   const [userrBooks, setUserrBooks] = useState([]);
   const [otherrBooks, setOtherrBooks] = useState([]);
-  // const [searchType, setSearchType] = useState('title');
-  // const [searchValue, setSearchValue] = useState('');
-  // const [searchResults, setSearchResults] = useState([]);
-
-  // const handleSearchTypeChange = (e) => {
-  //   setSearchType(e.target.value);
-  // };
 
   const fetchAPI = async () => {
     try {
@@ -21,7 +14,7 @@ const Allbooksuser = () => {
       if (!token) {
         navigate("/");
       }
-      const response = await axios.get("http://localhost:4000/api/books", {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}api/books`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
@@ -44,52 +37,6 @@ const Allbooksuser = () => {
     localStorage.clear();
     window.location.reload();
   };
-
-  // const handleSearch = async () => {
-  //   console.log(searchValue, searchType)
-  //   if (searchValue.trim() === '') {
-  //     // Do nothing if searchValue is empty
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axios.get(`http://localhost:4000/api/books/searchby${searchType}/${searchValue}`)
-  //     console.log(response.data)
-  //     if (response) {
-  //       console.log(response.data)
-  //     }
-  //   } catch (error) {
-  //     console.log(`error searching by ${searchType}: ${error}`)
-  //   }
-  //   setSearchValue('')
-  // }
-
-  // const handleSearchChange = async (e) => {
-  //   const newValue = e.target.value;
-  //   setSearchValue(newValue);
-
-  //   if (newValue.trim() === '') {
-  //     setSearchResults([]);
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axios.get(`http://localhost:4000/api/books/searchby${searchType}/${newValue}`)
-  //     if (response) {
-  //       setSearchResults(response.data)
-  //       console.log(response.data)
-  //     }
-  //     else{
-  //       setSearchResults([]);
-  //     }
-  //   } catch (error) {
-  //     setSearchResults([]);
-  //     console.log(`error searching by ${searchType}: ${error}`)
-  //   }
-  // }
-
-  // const handleSearchSelect = (value) => {
-  //   console.log("Selected Search Value:", value);
-  //   // Implement further actions with the selected value
-  // };
 
   return (
     <div className="m-0 p-0 bg-slate-500 min-h-screen">
