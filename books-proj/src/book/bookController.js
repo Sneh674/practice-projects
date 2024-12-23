@@ -118,6 +118,35 @@ const updateBook = async (req, res, next) => {
       return next(createHttpError(403, "Unauthorized"));
     }
 
+    // https://res.cloudinary.com/dyhayc8dw/image/upload/v1733981699/{book-covers/jakvarnwtitkybwfmnqu}.pdf  {public id}
+    const coverFileSplit = book.coverimg.split("/");
+    const coverimgPublicId =
+      coverFileSplit.at(-2) + "/" + coverFileSplit.at(-1)?.split(".").at(-2); //=>book-covers/jakvarnwtitkybwfmnqu
+    // await cloudinary.uploader.destroy
+
+    const fileFileSplit = book.file.split("/");
+    const filePublicId = fileFileSplit.at(-2) + "/" + fileFileSplit.at(-1);
+
+    // console.log(coverimgPublicId, "coverimgPublicId");
+    // console.log(filePublicId, "filePublicId");
+
+    try {
+      await cloudinary.uploader.destroy(coverimgPublicId);
+    } catch (err) {
+      return next(
+        createHttpError(500, "can't delete cover image from cloudinary")
+      );
+    }
+    try {
+      await cloudinary.uploader.destroy(filePublicId, {
+        resource_type: "raw",
+      });
+    } catch (err) {
+      return next(
+        createHttpError(500, "can't delete book file from cloudinary")
+      );
+    }
+
     let completeCoverimg = "";
     if (req?.files?.coverimg) {
       const coverimgMimeType = coverimg[0].mimetype.split("/").at(-1);
