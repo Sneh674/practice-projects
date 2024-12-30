@@ -9,6 +9,7 @@ const Register = () => {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,6 +18,11 @@ const Register = () => {
       [name]: value,
     }));
   };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -37,6 +43,7 @@ const Register = () => {
       alert("Registration failed!");
     }
   };
+
   return (
     <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-8">
       <Link
@@ -71,13 +78,22 @@ const Register = () => {
 
         {/* Password Field */}
         <label htmlFor="password" className="text-sm text-gray-300">Password</label>
-        <input
-          type="text"
-          name="password"
-          id="password"
-          onChange={handleChange}
-          className="p-2 bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            id="password"
+            onChange={handleChange}
+            className="p-2 bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+          />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-300"
+          >
+            {showPassword ? "Hide" : "Show"}
+          </button>
+        </div>
 
         {/* Submit Button */}
         <input
@@ -87,7 +103,6 @@ const Register = () => {
         />
       </form>
     </div>
-
   );
 };
 
